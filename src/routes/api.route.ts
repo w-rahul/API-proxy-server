@@ -31,7 +31,7 @@ router.get("/", async (req,res)=>{
         const data = response.data
 
         cachedDATA = data
-        cachedTime  = Date.now
+        cachedTime  = Date.now()
         data.cachedTime = cachedTime
     
          return res.status(200).json({data})    
