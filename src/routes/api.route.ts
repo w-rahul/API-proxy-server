@@ -12,7 +12,15 @@ const API_KEY : string | any = process.env.API_KEY
 const API_NAME : string | any = process.env.API_NAME 
 console.log(API_NAME)
 
+let cachedDATA :any
+let cachedTime :any
+
 router.get("/", async (req,res)=>{
+
+    if(cachedTime && cachedTime > Date.now() - 30 * 1000 ){
+        return res.status(200).json(cachedDATA)
+    }
+
     try {
             const params = new URLSearchParams({
                 [API_NAME] : API_KEY,
@@ -21,6 +29,10 @@ router.get("/", async (req,res)=>{
 
         const response = await axios.get(`${API_URL}?${params}`)
         const data = response.data
+
+        cachedDATA = data
+        cachedTime  = Date.now
+        data.cachedTime = cachedTime
     
          return res.status(200).json({data})    
     } catch (error) {

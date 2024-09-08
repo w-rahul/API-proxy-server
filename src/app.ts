@@ -12,8 +12,8 @@ const PORT =  process.env.PORT
 app.use(cors())
 
 const limiter = ratelimit({
-    windowMs : 10 * 60 * 1000,
-    max : 5
+    windowMs : 60 * 1000,
+    max : 50
 })
 
 app.use(limiter)
